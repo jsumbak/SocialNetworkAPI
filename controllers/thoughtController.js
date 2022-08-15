@@ -19,7 +19,7 @@ module.exports = {
     createThought(req, res) {
         Thought.create(req.body)
             .then((thought) => {
-                return User.findOneAndUpdate(
+                return Thought.findOneAndUpdate(
                     { _id: req.body.userId },
                     { $addToSet: { thoughts: thought._id } },
                     { new: true }
@@ -45,7 +45,7 @@ module.exports = {
         )
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: 'No video with this id!' })
+                    ? res.status(404).json({ message: 'No thought with this id!' })
                     : res.json(thought)
             )
             .catch((err) => {
@@ -57,15 +57,6 @@ module.exports = {
         Thought.findOneAndRemove({ _id: req.params.thoughtId })
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: 'No thought with this id!' })
-                    : User.findOneAndUpdate(
-                        { thoughts: req.params.thoughtId },
-                        { $pull: { thoughts: req.params.thoughtId } },
-                        { new: true }
-                    )
-            )
-            .then((user) =>
-                !user
                     ? res
                         .status(404)
                         .json({ message: 'Thought created but no user with this id!' })
@@ -77,7 +68,7 @@ module.exports = {
     addThoughtResponse(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $addToSet: { responses: req.body } },
+            { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }
         )
             .then((thought) =>
@@ -87,7 +78,7 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-    // Remove thought responsex
+    // Remove thought response
     removeThoughtResponse(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
