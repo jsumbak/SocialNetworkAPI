@@ -9,11 +9,11 @@ https://drive.google.com/file/d/1O2wDOqOHz2dxdEyTMAqYDHAo6cEWTZm4/view
 
 # Technology:
 
-Javascript
-Node.js
-Express.js
-MongoDB
-Mongoose
+- Javascript
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
 
 # Screenshot
 ![insomnia](./assets/insomnia.png) 
